@@ -1,19 +1,44 @@
-import Playlist from 'react-mp3-player';
+import { useState } from 'react';
+import { Button } from 'reactstrap';
+import AudioPlayer from 'react-audio-player';
 import '../Styling/mp3Player.css'
-import songfile from '../assets/pinkFloyd.mp3'
+import pinkFloyd from '../assets/pinkFloyd.mp3'
+import fooFighters from '../assets/fooFighters.mp3'
+import kidCudi from '../assets/kidCudi.mp3'
+import kingsOfLeon from '../assets/kingsOfLeon.mp3'
 
-const tracks = [{
-    img: 'https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg', name: 'MP3',
-    desc: 'pink floyd: wish you were here', src:{songfile}
-}]
+function SoundPlayer() {
 
-const soundPlayer = () => {
+const [ indexHolder, setIndexHolder ] = useState(0)
+
+const jukeBox = [
+    pinkFloyd, 
+    fooFighters, 
+    kidCudi, 
+    kingsOfLeon
+]
+
+
+const nextSong = () => {
+    if (indexHolder < jukeBox.length-1)
+    setIndexHolder(indexHolder+1)
+}
+
+const prevSong = () => {
+    if (indexHolder > 0) {
+        setIndexHolder(indexHolder-1)
+    }
+}
+
     return (
         <div className="playerInterface">
-            <h2>Mp3 Player</h2>
-            <Playlist tracks={tracks}/>
+            <h2>Song Title</h2>
+            <AudioPlayer src={jukeBox[indexHolder]} controls />
+            <br />
+            <Button onClick={prevSong}>Prev</Button>
+            <Button onClick={nextSong}>Next</Button>
         </div>
     )
 }
 
-export default soundPlayer
+export default SoundPlayer
